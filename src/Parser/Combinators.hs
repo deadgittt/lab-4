@@ -1,4 +1,5 @@
 {-# LANGUAGE LambdaCase #-}
+
 {- HLINT ignore "Use fromMaybe" -}
 
 module Parser.Combinators (
@@ -31,9 +32,9 @@ import Parser.Core
 -- Базовый парсер одного символа
 item :: Parser Char
 item =
-    Parser $ \ case
-            [] -> Left "unexpected end of input"
-            (c : cs) -> Right (c, cs)
+    Parser $ \case
+        [] -> Left "unexpected end of input"
+        (c : cs) -> Right (c, cs)
 
 -- Парсер символа по предикату
 satisfy :: (Char -> Bool) -> Parser Char
@@ -55,8 +56,8 @@ string = traverse char
 eof :: Parser ()
 eof =
     Parser $ \case
-            [] -> Right ((), [])
-            _ -> Left "expected end of input"
+        [] -> Right ((), [])
+        _ -> Left "expected end of input"
 
 -- Парсер пробельных символов
 spaces :: Parser String
