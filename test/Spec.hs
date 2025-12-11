@@ -29,7 +29,7 @@ data Point = Point
     }
     deriving (Show, Eq, Generic, JsonRead)
 
-data Sutdent = Student
+data Student = Student
     { name :: String
     , lastname :: String
     , age :: Int
