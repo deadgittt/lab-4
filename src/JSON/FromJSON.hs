@@ -1,5 +1,6 @@
 -- Задача: преобразование Json -> обычные Haskell-типы
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE InstanceSigs #-}
 
 module JSON.FromJSON (
     FromJSON (..),
@@ -12,6 +13,7 @@ class FromJSON a where
 
 -- Инстанс для Int с проверкой целой части
 instance FromJSON Int where
+    fromJSON :: Json -> Either String Int
     fromJSON (JNumber n) =
         let i = round n
          in if fromIntegral i == n
@@ -23,6 +25,11 @@ instance FromJSON Int where
 instance FromJSON Double where
     fromJSON (JNumber n) = Right n
     fromJSON _ = Left "expected JNumber for Double"
+
+-- Инстанс для Float (через приведение)
+instance FromJSON Float where
+    fromJSON (JNumber n) = Right (realToFrac n)
+    fromJSON _ = Left "expected JNumber for Float"
 
 -- Инстанс для String
 instance FromJSON String where

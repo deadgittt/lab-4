@@ -76,6 +76,7 @@ jsonValue :: Parser Json
 jsonValue = pNull <|> pBool <|> pNumber <|> pString <|> pArray <|> pObject
 
 -- Точка входа: оборачиваем запуск парсера с пропуском пробелов и проверкой конца ввода
+-- с помощью этой функции мы получаем наш IR в виде Json
 parseJson :: String -> Either String Json
 parseJson s =
     case runParser (spaces *> jsonValue <* eof) s of
